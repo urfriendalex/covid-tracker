@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback }  from 'react';
 import './App.scss';
-import {Cards, Chart, CountryPicker} from './components';
+import {Cards, Chart, CountryPicker, Nav} from './components';
 import { fetchData } from "./api";
 
 function App() {
   const [data, setData] = useState({});
+  const [currCountry, setCurrCountry] = useState();
    useEffect( () => {
       async function fetchApiData(){
         const fetchedData = await fetchData()
@@ -13,10 +14,15 @@ function App() {
      fetchApiData();
   }, []);
 
+
+  const handleCountryChange = useCallback((country) => {
+    setCurrCountry(country)
+  }, [currCountry]);
+
   return (
     <div className='App'>
       <Cards data={data}/>
-      <CountryPicker/>
+      <CountryPicker handleCountryChange={handleCountryChange} />
       <Chart/>
     </div>
   );

@@ -1,16 +1,15 @@
 import React from 'react';
 import CountUp from 'react-countup';
 
-const Cards = ({ data: { confirmed, recovered, deaths, lastUpdated } }) => {
+const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
   if (!confirmed) {
     return 'Loading...';
   }
-  console.log(confirmed);
   return (
-    <div className='container d-flex justify-content-md-between'>
+    <div className='container d-flex align-items-center justify-content-md-between flex-column flex-xl-row'>
       <div
         className='card border-info text-white bg-dark mb-3'
-        style={{ minWidth: '18rem' }}>
+        style={{ minWidth: '18rem'}}>
         <div className='card-header'>Confirmed</div>
         <div className='card-body'>
           <h5 className='card-title'>
@@ -35,6 +34,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdated } }) => {
               duration={2}
               separator=' '
             /></h5>
+          <p className='card-text'>{new Date(lastUpdate).toDateString()}</p>
           <p className='card-text'>Total cases recovered.</p>
         </div>
       </div>
