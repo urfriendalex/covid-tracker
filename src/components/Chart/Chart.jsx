@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, AreaChart, Area, BarChart } from 'recharts';
+import { Bar, XAxis, YAxis, Tooltip, AreaChart, Area, BarChart } from 'recharts';
 import {fetchDailyData} from '../../api';
 
-const Chart = (data, country) => {
+const Chart = ({data, country}) => {
+  
   const [dailyData, setDailyData] = useState([]);
   useEffect( () => {
     const fetchApiData = async () => {
@@ -11,9 +12,18 @@ const Chart = (data, country) => {
     fetchApiData();
   }, []);
 
+  console.log(data);
+  console.log(country);
+
   const barChart = (
-    data.confirmed ? (
-      <BarChart/>
+    country ? (
+      <BarChart width={600} height={300} data={data}>
+      <Bar type="monotone" dataKey="confirmed.value" stroke="#008080" fill="#008090"/>
+      <Bar type="monotone" dataKey="deaths.value" stroke="#008080" fill="#008090"/>
+      <Bar type="monotone" dataKey="recovered.value" stroke="#008080" fill="#008090"/>
+      <YAxis />
+      <XAxis dataKey='confirmed'/>
+      </BarChart>
     ) : null
   )
 
@@ -31,7 +41,7 @@ const Chart = (data, country) => {
 
   return(
     <div>
-      {lineChart}
+      {country!=='' ? barChart : lineChart}
     </div>
   )
 }

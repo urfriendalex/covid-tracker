@@ -5,8 +5,14 @@ import { Container } from 'react-bootstrap';
 import styles from './CountryPicker.module.scss';
 
 const CountryPicker = ( { handleCountryChange }) => {
-  const [selectedCountry, setSelectedCountry] = useState('Global');
   const [countries, setCountries] = useState([]);
+
+  const [selectedOption, setSelectedOption] = useState({});
+
+  const handleChange = (selectedOpt) => {
+    setSelectedOption(selectedOpt);
+    console.log(`Option selected:`, selectedOption);
+  }
 
   useEffect(() => {
     async function fetchApiCountries() {
@@ -17,7 +23,7 @@ const CountryPicker = ( { handleCountryChange }) => {
 
   return (
     <Container >
-      <Select className={styles.darkTheme} options={countries} onChange={(e) => handleCountryChange(e)} />
+      <Select className={styles.darkTheme} options={countries} onChange={handleCountryChange} />
     </Container>
   );
 };
